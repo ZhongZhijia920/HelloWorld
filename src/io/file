@@ -1,0 +1,58 @@
+java.io.file类用于表示文件（目录）
+File类只用于表示文件（目录）的信息（名称、大小等），不能用于文件内容的访问
+
+RandomAccessFile java提供的对文件内容的访问，既可以读文件，也可以写文件。
+RandomAccessFile支持随机访问文件，可以访问文件的任意位置。
+
+(1)java文件模型
+   在硬盘上文件是byte存储的，是数据的集合
+(2)打开文件
+   有两种模式“RW”读写，“R”只读
+   RandomAccessFile raf = new RandomAccessFile(file,"rw")
+   文件指针，打开文件时指针在开头 pointer = 0;
+(3)写方法
+    raf.write(int) ---------->只写一个字节（后8位），同时指针指向下一个位置
+    准备再次写入
+(4)读方法
+    int b = raf.read() ------------>读一个字节
+(5)文件读写完成以后一定要关闭
+
+输出流基本方法
+out.write(int b) 写出一个byte到流，b的低8位
+out.write(byte[] buf)将buf字节数组都写入到流
+out.write(byte[] buf, int start, int size)
+
+5)FileInputStream-------->具体实现了在文件上读取数据
+6)FileOutputStream 实现了向文件中写出byte数据的方法
+7)DataOutputStream/DatainputStream
+    对"流"功能的扩展，可以更加方便的读取int,long,字符等类型数据
+    DataOutputStream
+        writeInt()/writeDouble()/writeUTF()
+
+ 8)BufferedInputStream/BufferedOutputStream
+ 这两个流类为IO提供了带缓冲区的操作，一般打开文件进行写入
+ 或读取操作时，都会加上缓冲，这种流模式提高了IO的性能。
+ 从应用程序中把输入放入文件，相当于把一缸水倒入到另一个缸中
+ FileOutputStream---->write()方法相当于一滴一滴水“转移”
+ DataOutputStream---->writeXxx()方法相当于一瓢一瓢
+ BufferedOutputstream(速度:中)-->write相当于一瓢一瓢放入桶中，再从桶中
+ 倒入另一个水缸中。
+
+ 2.字符流
+ 1)编码问题
+ 2)认识文本和文本文件
+    java的文本(char)是16位无符号整数，是字符的unicode编码(双字节编码)
+    文件是byte byte byte...的数据序列
+    文本文件是文本(char)序列按照某种编码方案(uft-8,utf-16be,gbk)序列化位byte的存储
+ 3)字符流(Reader Writer)
+ 字符的处理，一次处理一个字符
+ 字符的底层仍是基本的字节序列
+ 字符流的基本实现
+    InputStreamReader 完成byte流解析为char流
+    OutputStreamReader 完成char流解析为byte流
+
+  FileReader/FileWriter (缺点:无法转换编码)
+
+  字符流的过滤器
+    BufferedReader -------->readLine 一次读一行
+    BufferedWriter/PrintWriter -------->写一行
